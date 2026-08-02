@@ -1,0 +1,13 @@
+package common
+version = 0.1.0
+authors = "L3odr0id"
+
+depends = deptycheck
+        , getopts
+        , prettier
+
+modules = Common
+        , Pretty
+        , Cli
+
+sourcedir = "src"

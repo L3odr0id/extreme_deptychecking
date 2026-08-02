@@ -1,0 +1,15 @@
+[custom.all.common]
+type = "local"
+path = "../common"
+ipkg = "common.ipkg"
+
+[custom.all.helper_type]
+type = "local"
+path = "."
+ipkg = "02_helper_type.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.helper_type-test]
+type = "local"
+path = "test"
+ipkg = "test.ipkg"

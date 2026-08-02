@@ -1,0 +1,45 @@
+name: Benchmark derivation
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}@${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  benchmarks:
+    name: Derivation and execution timing
+    runs-on: ubuntu-latest
+    container: ghcr.io/stefan-hoeck/idris2-pack:latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - run: pack update-db
+
+      - run: pack switch latest
+
+      - name: Measure and summarize benchmarks
+        run: ./scripts/run_benchmarks.sh
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: benchmark-results
+          path: |
+            results/*_derivation.json
+            results/*_execution.json
+          if-no-files-found: warn

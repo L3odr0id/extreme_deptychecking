@@ -1,0 +1,15 @@
+[custom.all.common]
+type = "local"
+path = "../common"
+ipkg = "common.ipkg"
+
+[custom.all.constructive_predicate]
+type = "local"
+path = "."
+ipkg = "constructive_predicate.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.constructive_predicate-test]
+type = "local"
+path = "test"
+ipkg = "test.ipkg"

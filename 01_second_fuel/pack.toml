@@ -1,0 +1,15 @@
+[custom.all.common]
+type = "local"
+path = "../common"
+ipkg = "common.ipkg"
+
+[custom.all.second_fuel]
+type = "local"
+path = "."
+ipkg = "second_fuel.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.second_fuel-test]
+type = "local"
+path = "test"
+ipkg = "test.ipkg"

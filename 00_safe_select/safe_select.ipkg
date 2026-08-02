@@ -1,0 +1,20 @@
+package safe_select
+version = 0.1.0
+authors = "L3odr0id"
+
+depends = common
+        , deptycheck
+        , getopts
+        , prettier
+
+modules = SafeSelect
+        , BoolPred.Derived
+        , SimpleDepTyPred.Derived
+        , CompValues.Derived
+        , FuncPred.Derived
+        , DepTyPred.Derived
+        , Printers
+
+main = Main
+executable = "safe_select"
+sourcedir = "src"

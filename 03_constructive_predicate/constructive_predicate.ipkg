@@ -1,0 +1,19 @@
+package constructive_predicate
+version = 0.1.0
+authors = "L3odr0id"
+
+depends = common
+        , deptycheck
+        , getopts
+        , prettier
+
+modules = ConstructivePredicate
+        , DepTyPred.Derived
+        , FuncPred.Derived
+        , FilteredFins.Derived
+        , ConstructiveDepTyPred.Derived
+        , Printers
+
+main = Main
+executable = "constructive_predicate"
+sourcedir = "src"

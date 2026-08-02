@@ -1,0 +1,17 @@
+package helper_type
+version = 0.1.0
+authors = "L3odr0id"
+
+depends = common
+        , deptycheck
+        , getopts
+        , prettier
+
+modules = HelperType
+        , Naive.Derived
+        , Helper.Derived
+        , Printers
+
+main = Main
+executable = "helper_type"
+sourcedir = "src"

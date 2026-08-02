@@ -1,0 +1,17 @@
+package second_fuel
+version = 0.1.0
+authors = "L3odr0id"
+
+depends = common
+        , deptycheck
+        , getopts
+        , prettier
+
+modules = SecondFuel
+        , ConsumersListFin.Derived
+        , ConsumersListFNat.Derived
+        , Printers
+
+main = Main
+executable = "second_fuel"
+sourcedir = "src"
