@@ -11,7 +11,7 @@ import Common
 import DepTyPred.Derived
 import FuncPred.Derived
 import FilteredFins.Derived
-import ConstructiveDepTyPred.Derived
+import ImageDepTyPred.Derived
 import Printers
 import ConstructivePredicate
 
@@ -28,14 +28,14 @@ fromBsList (b :: bs) = MkFinB2 FZ b :: weakenFinBs (fromBsList bs)
 predefinedFinBs : FinB2List 12
 predefinedFinBs = fromBsList predefinedBs
 
-data Mode = DepTyPredMode | FuncPredMode | FilteredFinsMode | ConstructiveDepTyPredMode
+data Mode = DepTyPredMode | FuncPredMode | FilteredFinsMode | ImageDepTyPredMode
 
 parseMode : String -> Either String Mode
 parseMode "deptypred"             = Right DepTyPredMode
 parseMode "funcpred"              = Right FuncPredMode
 parseMode "filteredfins"          = Right FilteredFinsMode
-parseMode "constructivedeptypred" = Right ConstructiveDepTyPredMode
-parseMode mode                    = Left $ "unknown generator `" ++ mode ++ "`. Expected deptypred, funcpred, filteredfins, or constructivedeptypred"
+parseMode "imagedeptypred" = Right ImageDepTyPredMode
+parseMode mode                    = Left $ "unknown generator `" ++ mode ++ "`. Expected deptypred, funcpred, filteredfins, or imagedeptypred"
 
 defaultConfig : Cfg Mode
 defaultConfig = MkConfig 10 (limit 4) DepTyPredMode 10
@@ -48,13 +48,13 @@ runSelected cfg =
     DepTyPredMode             => run cfg.testsCnt printDepTyPred             $ genDepTyPredResultList             cfg.modelFuel as predefinedBs
     FuncPredMode              => run cfg.testsCnt printFuncPred              $ genFuncPredResultList              cfg.modelFuel as predefinedBs
     FilteredFinsMode          => run cfg.testsCnt printFilteredFins          $ genFilteredFinsResultList          cfg.modelFuel as predefinedBs
-    ConstructiveDepTyPredMode => run cfg.testsCnt printConstructiveDepTyPred $ genConstructiveDepTyPredResultList cfg.modelFuel as predefinedFinBs
+    ImageDepTyPredMode => run cfg.testsCnt printImageDepTyPred $ genImageDepTyPredResultList cfg.modelFuel as predefinedFinBs
 
 covering
 main : IO ()
 main = mainWith
   "Usage: constructive_predicate [OPTIONS]"
   parseMode
-  " <deptypred|funcpred|filteredfins|constructivedeptypred>"
+  " <deptypred|funcpred|filteredfins|imagedeptypred>"
   defaultConfig
   runSelected

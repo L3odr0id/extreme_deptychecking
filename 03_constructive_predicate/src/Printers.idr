@@ -24,9 +24,9 @@ filteredFinsItems : FilteredFinsResultList asl bs -> List String
 filteredFinsItems []                                        = []
 filteredFinsItems (MkFilteredFins _ _ finalFinB :: results) = filteredFinValue finalFinB :: filteredFinsItems results
 
-constructiveDepTyPredItems : ConstructiveDepTyPredResultList asl fbs -> List String
-constructiveDepTyPredItems []                        = []
-constructiveDepTyPredItems (CDTPR _ _ fb :: results) = filteredFinValue fb :: constructiveDepTyPredItems results
+imageDepTyPredItems : ImageDepTyPredResultList asl fbs -> List String
+imageDepTyPredItems []                        = []
+imageDepTyPredItems (IDTPR _ _ fb :: results) = filteredFinValue fb :: imageDepTyPredItems results
 
 export
 printDepTyPred : {opts : LayoutOpts} -> {bs : BsList} ->
@@ -44,6 +44,6 @@ printFilteredFins : {opts : LayoutOpts} ->
 printFilteredFins results = printAny $ filteredFinsItems results
 
 export
-printConstructiveDepTyPred : {opts : LayoutOpts} ->
-                             ConstructiveDepTyPredResultList asl fbs -> Gen0 $ Doc opts
-printConstructiveDepTyPred results = printAny $ constructiveDepTyPredItems results
+printImageDepTyPred : {opts : LayoutOpts} ->
+                             ImageDepTyPredResultList asl fbs -> Gen0 $ Doc opts
+printImageDepTyPred results = printAny $ imageDepTyPredItems results

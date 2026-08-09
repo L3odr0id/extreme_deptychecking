@@ -1,4 +1,4 @@
-module ConstructiveDepTyPred.Derived
+module ImageDepTyPred.Derived
 
 import public ConstructivePredicate
 
@@ -8,4 +8,4 @@ import Deriving.DepTyCheck.Gen
 
 %logging "deptycheck.derive" 20
 
-ConstructivePredicate.genConstructiveDepTyPredResultList = deriveGen
+ConstructivePredicate.genImageDepTyPredResultList = deriveGen

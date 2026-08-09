@@ -22,7 +22,7 @@ import public Common
   - DepTyPred — naive: `Fin` + inductive `IsCompatible`
   - FuncPred — `goodFins` boolean filter, then `Fin` into that
   - FilteredFins — constructive filter of `bs`, then pick into kept fins
-  - ConstructiveDepTyPred — compatibility witness + filter over a `FinB2List`
+  - ImageDepTyPred — generate image using predicate, then fin into filtered fins
 -}
 
 ---------------------------------------------------------------
@@ -139,7 +139,7 @@ export
 genFilteredFinsResultList : Fuel -> (asl : AList) -> (bs : BsList) -> Gen0 $ FilteredFinsResultList asl bs
 
 ---------------------------------------------------------------
--- ConstructiveDepTyPred: compatibility + filter over FinB2List
+-- ImageDepTyPred: filter by image
 ---------------------------------------------------------------
 
 namespace BsVect
@@ -277,34 +277,34 @@ data FilteredBFinss : B -> (bs : FinB2List fullBs) -> FinsList fullBs -> Type wh
 
 ||| Pick `b` compatible with `a`, filter the fin-tagged list to that `b`, then pick into the filtered fins
 public export
-data ConstructiveDepTyPredResult : A -> FinB2List fullBs -> Type where
-  CDTPR : {0 b : B} -> {0 goodBFins : FinsList fullBs} ->
+data ImageDepTyPredResult : A -> FinB2List fullBs -> Type where
+  IDTPR : {0 b : B} -> {0 goodBFins : FinsList fullBs} ->
           (0 pred : IsCompatible a b) ->
           (0 filteredAsHelper : FilteredBFinss b finbs goodBFins) ->
           (finalFinB : Fin goodBFins.length) ->
-          ConstructiveDepTyPredResult a finbs
+          ImageDepTyPredResult a finbs
 
-GenOrderTuning "CDTPR".dataCon where
+GenOrderTuning "IDTPR".dataCon where
   isConstructor = itIsConstructor
   deriveFirst _ _ = [`{pred}, `{b}, `{filteredAsHelper}, `{goodBFins}, `{finalFinB}]
 
-namespace ConstructiveDepTyPredResultList
+namespace ImageDepTyPredResultList
 
   public export
-  data ConstructiveDepTyPredResultList : AList -> FinB2List fullBs -> Type where
-    Nil  : ConstructiveDepTyPredResultList [] fbs
-    (::) : ConstructiveDepTyPredResult a fbs -> ConstructiveDepTyPredResultList asl fbs -> ConstructiveDepTyPredResultList (a::asl) fbs
+  data ImageDepTyPredResultList : AList -> FinB2List fullBs -> Type where
+    Nil  : ImageDepTyPredResultList [] fbs
+    (::) : ImageDepTyPredResult a fbs -> ImageDepTyPredResultList asl fbs -> ImageDepTyPredResultList (a::asl) fbs
 
-  %name ConstructiveDepTyPredResultList cdtprs
+  %name ImageDepTyPredResultList idtprs
 
   public export
-  length : ConstructiveDepTyPredResultList asl fbs -> Nat
+  length : ImageDepTyPredResultList asl fbs -> Nat
   length []      = 0
   length (x::xs) = S $ length xs
 
   public export %inline
-  (.length) : ConstructiveDepTyPredResultList asl fbs -> Nat
+  (.length) : ImageDepTyPredResultList asl fbs -> Nat
   (.length) = length
 
 export
-genConstructiveDepTyPredResultList : Fuel -> (asl : AList) -> {fullBs : Nat} -> (fbs : FinB2List fullBs) -> Gen0 $ ConstructiveDepTyPredResultList asl fbs
+genImageDepTyPredResultList : Fuel -> (asl : AList) -> {fullBs : Nat} -> (fbs : FinB2List fullBs) -> Gen0 $ ImageDepTyPredResultList asl fbs

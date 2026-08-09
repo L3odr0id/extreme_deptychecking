@@ -120,13 +120,13 @@ BENCHMARKS: dict[str, Benchmark] = {
             "DepTyPred": "DepTyPred",
             "FuncPred": "FuncPred",
             "FilteredFins": "FilteredFins",
-            "ConstructiveDepTyPred": "ConstructiveDepTyPred",
+            "ImageDepTyPred": "ImageDepTyPred",
         },
         execution_modes={
             "DepTyPred": "deptypred",
             "FuncPred": "funcpred",
             "FilteredFins": "filteredfins",
-            "ConstructiveDepTyPred": "constructivedeptypred",
+            "ImageDepTyPred": "imagedeptypred",
         },
     ),
 }

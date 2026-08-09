@@ -125,8 +125,7 @@ genCompValuesResults : Fuel -> (as : AList) -> (bs : BsList) -> Gen MaybeEmpty $
 ||| Indices into `bs` whose element is compatible with `a`
 public export
 goodFins : A -> (bs : BsList) -> FinsList bs.length
-goodFins a bs = fromList $ foldr (\fb, acc => if isCompatible a (index bs fb) then fb::acc else acc) [] $
-                  toList $ Data.Vect.allFins bs.length
+goodFins a bs = fromList $ foldr (\fb, acc => if isCompatible a (index bs fb) then fb::acc else acc) [] $ toList $ Data.Vect.allFins bs.length
 
 ||| Pick into the filtered index list produced by `goodFins`
 public export

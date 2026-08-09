@@ -11,7 +11,7 @@ modules = ConstructivePredicate
         , DepTyPred.Derived
         , FuncPred.Derived
         , FilteredFins.Derived
-        , ConstructiveDepTyPred.Derived
+        , ImageDepTyPred.Derived
         , Printers
 
 main = Main
