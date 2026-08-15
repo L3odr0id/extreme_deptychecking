@@ -17,8 +17,6 @@ namespace BsList
 
   public export
   length : BsList -> Nat
-  length []      = 0
-  length (_::xs) = S (length xs)
 
   public export %inline
   (.length) : BsList -> Nat
@@ -35,8 +33,6 @@ namespace FinsList
 
   public export
   length : FinsList n -> Nat
-  length []      = 0
-  length (_::xs) = S (length xs)
 
   public export %inline
   (.length) : FinsList n -> Nat
@@ -216,10 +212,6 @@ data NaivePartition : {n : Nat} -> (src : FinsList n) -> Type where
             NaivePartition src
 ```
 
-<!-- idris
-addToBucket : FourGroups n -> Fin 4 -> Fin n -> FourGroups n
--->
-
 To solve the problem, replace a hard-to-generate invariant with a helper type that builds a correct value step by step.
 The helper type does not represent the domain logic.
 It just helps the generator build the values you need.
@@ -243,6 +235,10 @@ data FillInto4 : {n : Nat} ->
          (target : Fin 4) ->
          FillInto4 src pre (FS i) (S k) (addToBucket mid target (index src i))
 ```
+
+<!-- idris
+addToBucket : FourGroups n -> Fin 4 -> Fin n -> FourGroups n
+-->
 
 ### [`03_constructive_predicate`](03_constructive_predicate/) — place predicate before `Fin` using only dependent types
 
@@ -291,7 +287,6 @@ This approach derives and generates values much more slowly than `FuncPredResult
 data NotCompatible : A -> B -> Type
 
 namespace FinsList
-  public export
   weakenFins : FinsList n -> FinsList (S n)
   weakenFins []      = []
   weakenFins (f::fs) = FS f :: weakenFins fs

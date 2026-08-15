@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+# COPIED from https://github.com/buzden/deptycheck/blob/660a23e6da286359af6edad09b5d441a39a4f8c5/tests/docs/typecheck/run
+
+cd "$(dirname "$0")" || exit 1
+
+# Pre-cleanup
+rm -rf build src docs.ipkg
+
+mkdir -p src
+ln -s ../../../../README.md src/Readme.md
+
+echo "
+package docs
+modules = Readme
+depends = deptycheck
+sourcedir = \"src\"
+" > docs.ipkg
+
+pack -q install-deps docs.ipkg &&
+idris2 --build docs.ipkg
+
+# Post-cleanup
+rm -rf build src docs.ipkg

@@ -1,4 +1,4 @@
-name: Benchmark derivation
+name: Benchmark
 
 on:
   push:
@@ -16,6 +16,20 @@ defaults:
     shell: bash
 
 jobs:
+  readme-typecheck:
+    name: Typecheck README Idris snippets
+    runs-on: ubuntu-latest
+    container: ghcr.io/stefan-hoeck/idris2-pack:latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - run: pack update-db
+
+      - run: pack switch latest
+
+      - name: Typecheck Idris code blocks in README
+        run: ./tests/docs/typecheck/run
+
   benchmarks:
     name: Derivation and execution timing
     runs-on: ubuntu-latest
