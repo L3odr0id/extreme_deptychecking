@@ -65,9 +65,9 @@ featuring minimal examples, benchmarks, and some practical rules and debugging t
 
 1. Do not use hand-written generators.
 2. Do not use hand-written generators.
-3. Do not leave implicits unhandled. Make sure that implicit indexes of all types are passed successfully (or pass them explicitly). Otherwise they may be just generated and fail the whole generation process.
+3. Do not leave implicit type indexes ambiguous. If you want them to be given, constrain them explicitly, or they may be treated as generated.
 4. Do not invent complex structures. DepTyCheck works best with flat lists. Represent your domain using them.
-5. Do not design the specification in isolation. Real specifications are printer-centric. Structure your model so that it can be easily printed.
+5. Do not design the specification in isolation. Real specifications are printer-centric. Structure your model so that generated values can be easily printed (translated into input data of tested tool).
 6. Do not use functions by default. Model your specification using dependent types first.
 7. Do not hesitate to add auxiliary arguments to constructors. Even if they aren't needed for value generation, they can be used to pattern match on them later.
 8. If this is your first time using DepTyCheck, you have to see [pil-fun](https://github.com/buzden/deptycheck/tree/master/examples/pil-fun) implementation for reference.
@@ -75,8 +75,8 @@ featuring minimal examples, benchmarks, and some practical rules and debugging t
 ## Debugging tips
 
 - If derivation or generation suspiciously freezes, try converting complex dependent types into standard functions and replace predicates with So + Bool functions.
-- Never leave anonymous arguments in constructors. Giving every argument an explicit name makes reading derivation logs and tracking arguments order significantly easier.
-- If you are unsure whether a specific type can actually be constructed, try instantiating its value manually. Use auto implicit arguments so the compiler handles the routine boilerplate for you.
+- Never leave unnamed arguments in constructors. Giving every argument an explicit name makes reading derivation logs and tracking arguments order significantly easier.
+- If you are unsure whether a specific type can actually be constructed, try instantiating its value manually. Use `%search` to make the compiler handle the routine boilerplate for you.
 - When verifying if a specific dependent type value can actually be constructed, use auto implicit auxiliary arguments to manually inject values for testing.
 - If derivation hangs on a specific constructor for an unusually long time, do not wait for it to finish. Cancel the process and begin debugging that constructor.
 - If nothing works, recreate a minimal, bare-bones version of the model in a clean test project. Verify that basic generation works, then add features back step-by-step.
@@ -160,7 +160,8 @@ data DepTyPredResult : A -> BsList -> Type where
 
 Sometimes generators for even recursive structures are not total.
 This happens when derivator can't prove that there is a decreasing index.
-Such a recursive structure can be indexed by `Nat` so generation can follow the `Nat` without exhausting primary model fuel.
+DepTyCheck automatically manages structural fuel for generators, but you can also introduce custom, type-level fuel to bypass standard fuel consumption.
+For instance, a recursive structure can be indexed by a separate `Nat` that acts as a domain-specific fuel source allowing generation to follow that `Nat` index without exhausting the default DepTyCheck fuel budget.
 
 **Task:** build a list whose length is tied to a `Fin` index (each step consumes one unit).
 
